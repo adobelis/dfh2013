@@ -1,18 +1,28 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html><head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>Chapter 4: Templates</title>
     <link rel="stylesheet" href="_static/reset-min.css" type="text/css">
     <link rel="stylesheet" href="_static/grids-min.css" type="text/css">
     <link rel="stylesheet" href="_static/djangobook.css" type="text/css">
-    
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
   <meta name="boolyrun" content="1359837780044-2951"><script>window["_GOOG_TRANS_EXT_VER"] = "1";</script></head>
   <body>
- 		<div>comment: <em>{{ visual_tag.comments.1.content }}</em></div>
+        <div id="video_box">
+            <video width="320" height="240" id="video">
+                <source src="static/movie.mov" type="video/mp4"/>
+            </video>
+            <div id="">
 
-        Copyright Adrian Holovaty, Jacob Kaplan-Moss, et al.<br>This
-        work is licensed under the <a href="license.html">GNU Free Document
-        License</a>.
+            </div>
+        </div>
+        <div id="comments">
+            {% for visual_tag in visual_tags %}
+                {% for comment in visual_tag.comments %}
+                    <p>{{comment.content}}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
   
   
 </body></html>

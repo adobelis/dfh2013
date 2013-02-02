@@ -16,3 +16,5 @@ demotagger/__init__.pyc
 demotagger/settings.pyc
 
 demotagger/urls.pyc
+
+*.mov
