@@ -1,7 +1,9 @@
 # Django settings for demotagger project.
+import os.path
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+PROJECT_PATH = os.path.abspath('%s' % os.path.dirname(__file__))
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -109,6 +111,8 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'media_wkf',
+    'utilities',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

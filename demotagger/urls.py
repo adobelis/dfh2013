@@ -1,12 +1,11 @@
 from django.conf.urls.defaults import patterns, include, url
-
+from media_wkf import views as mw_views
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'demotagger.views.home', name='home'),
+    url(r'^$', mw_views.index, name='mw_index'),
     # url(r'^demotagger/', include('demotagger.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
