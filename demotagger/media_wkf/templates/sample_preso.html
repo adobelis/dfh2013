@@ -8,8 +8,9 @@
 	<script type='text/javascript' src='http://code.jquery.com/jquery-2.0.0b1.js'></script>
     <script type='text/javascript' src='/static/bootstrap/js/tag.js'></script>
     <script type='text/javascript'>
-        var workspace_id = {{workspace_id}}
-        var user_id = {{user_id}}
+        var workspace_id = {{workspace_id}};
+        var user_id = {{user_id.pk}};
+        var media_item_id = {{media_items.0.id}};
     </script>
   <meta name="boolyrun" content="1359837780044-2951"><script>window["_GOOG_TRANS_EXT_VER"] = "1";</script></head>
   <body>
@@ -40,7 +41,7 @@
         <div class="row">
         <div id="video_box">
             <video width="640" height="480" id="video">
-                <source src="{{ MEDIA_URL }}{{ media_item.media_file}}" type="video/mp4"/>
+                <source src="{{ MEDIA_URL }}{{ media_items.0.media_file}}" type="video/mp4"/>
             </video>
             <div id="new_tag"/>
         </div>
@@ -59,10 +60,13 @@
                 {% endfor %}
             </div>
         </div>
+<<<<<<< HEAD
         {% endfor %}
         </div>
 </div>
 <footer>
 	<p>© Company 2013</p>
 </footer>
+=======
+>>>>>>> 3f544d53d20f07d874f61fc42eb314bd02b34e1b
 </body></html>

@@ -106,19 +106,21 @@ def add_comment(request):
     left                = request_data.get('left', None)
     height              = request_data.get('height', None)
     width               = request_data.get('width', None)
-    comment_type        = request_data.get('comment_type', None)
-    comment_urgency     = request_data.get('comment_urgency', None)
+    comment_type        = request_data.get('comment_type', 0)
+    comment_urgency     = request_data.get('comment_urgency', 0)
 
     #tag_index           = models.IntegerField()
     if not video_frame_ctxt_id:
-      frame_context = mw_models.VideoFrameContext(workspace_id=workspace_id, media_item_id=media_item_id, frame_time=frame_time)
+      workspace = mw_models.Workspace.objects.get(pk=workspace_id)
+      media_item = mw_models.MediaItem.objects.get(pk=media_item_id)
+      frame_context = mw_models.VideoFrameContext(workspace=workspace, media_item=media_item, frame_time=frame_time)
       frame_context.save()
-      video_frame_ctxt_id = frame.id
+      video_frame_ctxt_id = frame_context.id
     
-    new_note = mw_models.VisualTag(workspace_id=workspace_id, video_frame_context_id=video_frame_ctxt_id, commenter_up_id=commenter_id, top=top, left=left, width=width, height=height, comment_type=comment_type, comment_urgency=comment_urgency)
+    new_note = mw_models.VisualTag(workspace_id=workspace_id, video_frame_context_id=video_frame_ctxt_id, commenter_up_id=commenter_id, top=top, left=left, width=width, height=height, comment_type=comment_type, comment_urgency=comment_urgency, tag_index=0)
     new_note.save()
 
     return HttpResponse(
-      json.dumps({"frame_id": 0}),
+      json.dumps({"video_frame_ctxt_id": video_frame_ctxt_id}),
       mimetype='application/json'
     );
