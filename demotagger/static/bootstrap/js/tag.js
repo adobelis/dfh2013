@@ -3,10 +3,12 @@ $(document).ready(function() {
   var left = 0;
   var top = 0;
   var width, height;
-  var currentTag;
+  var currentTag = $('#new_tag');
   var video = $('#video');
 
   var tag_hash = {tag_frames: {}};
+
+  var tag_added = false;
 
   $('body').mousedown(function(e) {
     var offset = video.offset();
@@ -14,9 +16,7 @@ $(document).ready(function() {
     top = e.pageY-offset.top;
     if (left < video.width() && top < video.height()) {
       tagging = true;
-      $('#video_box').append('<div class="tag_box"></div>');
-      currentTag = video.siblings('.tag_box').last();
-      currentTag.css({'left': left, 'top': top});
+      currentTag.css({'left': left, 'top': top, 'width':0, 'height':0});
       console.log(video[0].currentTime);
     }
   });
@@ -56,18 +56,40 @@ $(document).ready(function() {
       var endX = e.pageX-offset.left;
       var endY = e.pageY-offset.top;
       if (endX == left && endY == top) {
-        currentTag.remove();
+        //currentTag.remove();
+      } else {
+        tag_added = true;
+        if (width < 0) {
+          currentTag.css({'left': left+width, 'width':-width});
+        } else {
+          currentTag.css({'left': left, 'width':width});
+        }
+        if (height < 0) {
+          currentTag.css({'top': top+height, 'height':-height});
+        } else {
+          currentTag.css({'top': top, 'height':height});
+        }
       }
-      var frame = tag_hash["tag_frames"][""+video[0].currentTime];
-      if (frame == null) {
-        frame = tag_hash["tag_frames"][""+video[0].currentTime] = {visual_tags:[]};
-      }
-      frame["visual_tags"].push({"visual_tag" : []});
-      console.log(JSON.stringify(tag_hash));
     }
   })
   $('.comment').click(function(e) {
     console.log($(this).attr('data'));
     video[0].currentTime = $(this).attr('data');
+  })
+  $('#add_comment').click(function(e) {
+    var data = {workspace_id: workspace_id, media_item_id: 0, frame_time: video[0].currentTime, commenter_id: user_id,
+          left: parseInt(currentTag.css('left')),
+          top: parseInt(currentTag.css('top')),
+          width: currentTag.width(),
+          height: currentTag.height()};
+    console.log(data);
+    $.post('/media_wkf/add_comment/',
+        {"data": JSON.stringify(data)},
+        function(data) {
+          $('#video_box').append('<div class="tag_box"></div>');
+          video.siblings('.tag_box').last().css({'left': currentTag.css('left'), 'top': currentTag.css('top'), 'width': currentTag.width(), 'height': currentTag.height()});
+          currentTag.css({'width':0, 'height':0});
+        }
+      );
   })
 })
