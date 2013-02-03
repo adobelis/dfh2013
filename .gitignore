@@ -25,3 +25,9 @@ demotagger/settings.pyc
 demotagger/utilities/__init__.pyc
 
 demotagger/utilities/models.pyc
+
+demotagger/media_wkf/models.pyc
+
+demotagger/media_wkf/models.pyc
+
+demotagger/media_wkf/views.pyc

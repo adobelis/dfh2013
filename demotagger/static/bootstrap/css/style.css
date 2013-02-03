@@ -17,8 +17,8 @@
   border:2px solid yellow;
 }
 
-.tag_box.hover {
-  background: rgba(255,255,255,.3);
+#video_box .tag_box.hover {
+  border:4px solid yellow;
 }
 
 #video_box #new_tag {
