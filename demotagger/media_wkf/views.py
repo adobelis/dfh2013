@@ -60,7 +60,7 @@ def index(request):
           ]
       }
 
-@render_with('sample_preso.html')
+@render_with('sample_preso2.html')
 def sample_preso(request, workspace_index, preso_index):
     user_profile = request.user.get_profile()
     member = mw_models.WorkspaceMembership.objects.filter(user_profile=user_profile, workspace=workspace_index)

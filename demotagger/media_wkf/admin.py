@@ -24,7 +24,7 @@ class SamplePresentationAdmin(admin.ModelAdmin):
 admin.site.register(mw_models.SamplePresentation, SamplePresentationAdmin)
 
 class MediaItemAdmin(admin.ModelAdmin):
-    list_display = ('workspace', 'sample_presentation', 'url')
+    list_display = ('media_item_name', 'media_item_description', 'workspace', 'sample_presentation', 'url')
 admin.site.register(mw_models.MediaItem, MediaItemAdmin)
 
 class VideoFrameContextAdmin(admin.ModelAdmin):
