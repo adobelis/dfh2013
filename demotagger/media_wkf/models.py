@@ -102,6 +102,9 @@ class MediaItem(models.Model):
                                             verify_exists=False,
                                             max_length=256,
                                             null=True, blank=True)
+    media_file  = models.FileField(upload_to='media_items/', 
+                                   max_length=250,
+                                   null=True, blank=True)
 
 class VideoFrameContext(models.Model):
     """

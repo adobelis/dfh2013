@@ -5,6 +5,34 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import media_wkf.models as mw_models
 
+from django.shortcuts import render_to_response
+from django.contrib.auth import authenticate, login
+
+@render_with('auth.html')
+def login_user(request):
+    posted = False
+    logged_in = False
+    username = password = ''
+    user_exists=True
+    if request.POST:
+        posted = True
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+        user_exists = True
+        logged_in = False
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                logged_in=True
+        else:
+            user_exists = False
+
+    return {'posted': posted,'logged_in':logged_in, 'username': username, 'user_exists': user_exists}
+
+
+
 @render_with('index.html')
 def index(request):
     return {
@@ -31,6 +59,25 @@ def index(request):
           }
           ]
       }
+
+@render_with('sample_preso.html')
+def sample_preso(request, workspace_index, preso_index):
+    user_profile = request.user.get_profile()
+    member = mw_models.WorkspaceMembership.objects.filter(user_profile=user_profile, workspace=workspace_index)
+    if not len(member):
+        return HttpResponse("Not your workspace")
+    sample_preso = mw_models.SamplePresentation.objects.get(workspace=workspace_index,
+                                                            pk=preso_index)
+    media_items = mw_models.MediaItem.objects.filter(sample_presentation=preso_index)
+    return {
+        "workspace_id": workspace_index,
+        "user_id": user_profile,
+        "sample_preso": sample_preso,
+        "media_items": media_items,
+    }
+
+
+
 
 @csrf_exempt
 def add_comment(request):
