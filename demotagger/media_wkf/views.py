@@ -5,7 +5,8 @@ from datetime import datetime, timedelta
 @render_with('index.html')
 def index(request):
     return {
-        "visual_tag": {
+        "visual_tags": [
+          {
             "x": 100,
             "y": 100,
             "time": 10.104,
@@ -22,5 +23,6 @@ def index(request):
                   }
     
                 ]
-            }
-        }# Create your views here.
+          }
+          ]
+      }
