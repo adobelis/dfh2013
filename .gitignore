@@ -11,10 +11,7 @@ bin-release/
 # information for Eclipse / Flash Builder.
 
 .DS_Store
-demotagger/__init__.pyc
-
-demotagger/settings.pyc
-
-demotagger/urls.pyc
+*.pyc
+demotagger/localsettings.py
 
 *.mov

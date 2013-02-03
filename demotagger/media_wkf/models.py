@@ -8,13 +8,18 @@ class Workspace(models.Model):
     A shared permission 'space', users with access to items in a workspace
     can see all projects/samples/content related to that workspace.
     """
+    workspace_name = models.CharField(max_length=150)
     dt_created = models.DateTimeField(default=datetime.utcnow, editable=False)
+    def __unicode__(self):
+        return u'%s' % self.workspace_name
+    
 
 class UserProfile(models.Model):
     """
     Any person using the system
     """
     user                = models.OneToOneField(User, primary_key=True)
+    full_name           = models.CharField(max_length=100)
     workspace           = models.ManyToManyField(Workspace, through="WorkspaceMembership", 
                                                  related_name="wkspace")
     email            = models.EmailField(_('Email'),
@@ -58,14 +63,19 @@ class UserProfile(models.Model):
                                             default=datetime.utcnow, editable=False)
     is_active           = models.BooleanField(_('is active'),
                                             default=True, editable=True)
+    def __unicode__(self):
+        return u'%s (%s)' % (self.full_name, self.user.username)
 
 class WorkspaceMembership(models.Model):
     user_profile = models.ForeignKey(UserProfile)
     workspace    = models.ForeignKey(Workspace)
 
 class SampleProject(models.Model):
+    sampleproject_name = models.CharField(max_length=100)
     workspace = models.ForeignKey(Workspace)
     dt_created = models.DateTimeField(default=datetime.utcnow, editable=False)
+    def __unicode__(self):
+        return u'%s' % self.sampleproject_name
 
 class SamplePresentation(models.Model):
     """
@@ -75,8 +85,11 @@ class SamplePresentation(models.Model):
     """
     workspace = models.ForeignKey(Workspace)
     sample_project = models.ForeignKey(SampleProject)
+    samplepreso_name = models.CharField(max_length=100)
     creator_up = models.ForeignKey(UserProfile, related_name="creator")
     primary_recipient_up = models.ForeignKey(UserProfile, related_name="primary_recip")
+    def __unicode__(self):
+        return u'%s' % self.samplepreso_name
 
 class MediaItem(models.Model):
     """
