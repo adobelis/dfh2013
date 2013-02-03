@@ -77,7 +77,7 @@ $(document).ready(function() {
     video[0].currentTime = $(this).attr('data');
   })
   $('#add_comment').click(function(e) {
-    var data = {workspace_id: workspace_id, frame_time: video[0].currentTime, commenter_id: user_id,
+    var data = {workspace_id: workspace_id, media_item_id: 0, frame_time: video[0].currentTime, commenter_id: user_id,
           left: parseInt(currentTag.css('left')),
           top: parseInt(currentTag.css('top')),
           width: currentTag.width(),
