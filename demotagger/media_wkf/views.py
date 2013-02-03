@@ -69,11 +69,19 @@ def sample_preso(request, workspace_index, preso_index):
     sample_preso = mw_models.SamplePresentation.objects.get(workspace=workspace_index,
                                                             pk=preso_index)
     media_items = mw_models.MediaItem.objects.filter(sample_presentation=preso_index)
+
+    media_item = media_items[0]
+
+    frame_times = mw_models.VideoFrameContext.objects.filter(media_item=media_item)
+    frame_times = json.dumps([{"id": frame_time.id, "time": frame_time.frame_time} \
+                    for frame_time in frame_times])
+
     return {
         "workspace_id": workspace_index,
         "user_id": user_profile,
         "sample_preso": sample_preso,
         "media_items": media_items,
+        "frame_times": frame_times
     }
 
 
