@@ -14,6 +14,11 @@
 
 #video_box .tag_box {
   position: absolute;
+  border:1px solid yellow;
+}
+
+#video_box #new_tag {
+  position: absolute;
   border:1px solid red;
 }
 

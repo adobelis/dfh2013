@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html><head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>Chapter 4: Templates</title>
-    <link rel="stylesheet" href="_static/reset-min.css" type="text/css">
-    <link rel="stylesheet" href="_static/grids-min.css" type="text/css">
-    <link rel="stylesheet" href="_static/djangobook.css" type="text/css">
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <title>DemoTagger</title>
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/style.css">
     <script type='text/javascript' src='http://code.jquery.com/jquery-2.0.0b1.js'></script>
     <script type='text/javascript' src='/static/bootstrap/js/tag.js'></script>
+    <script type='text/javascript'>
+        var workspace_id = {{workspace_id}}
+        var user_id = {{user_id}}
+    </script>
   <meta name="boolyrun" content="1359837780044-2951"><script>window["_GOOG_TRANS_EXT_VER"] = "1";</script></head>
   <body>
         <div id="video_box">
             <video width="640" height="480" id="video">
                 <source src="/static/movie2.mov" type="video/mp4"/>
             </video>
+            <div id="new_tag"/>
         </div>
         <div id="video_controls">
             <div id="play"/>
             <div id="time_slider"/>
         </div>
         <div>
+            <textarea id="new_comment"></textarea>
+            <input type="submit" value="Add Comment" id="add_comment"></input>
             <div id="comments">
                 {% for visual_tag in visual_tags %}
                     {% for comment in visual_tag.comments %}
