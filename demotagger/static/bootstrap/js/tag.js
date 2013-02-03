@@ -78,16 +78,19 @@ $(document).ready(function() {
     video[0].currentTime = $(this).attr('data');
   })
   $('#add_comment').click(function(e) {
+    console.log("hello");
     var data = {workspace_id: workspace_id, media_item_id: media_item_id, video_frame_ctxt_id: context, frame_time: video[0].currentTime, commenter_id: user_id,
           left: parseInt(currentTag.css('left')),
           top: parseInt(currentTag.css('top')),
           width: currentTag.width(),
           height: currentTag.height()};
+          console.log(data);
     $.post('/media_wkf/add_comment/',
         {"data": JSON.stringify(data)},
         function(data) {
           var ctxt_id = data['video_frame_ctxt_id'];
           var matching_frame = $(".frame_context[data-id="+ctxt_id+"]");
+          console.log(matching_frame);
           if (matching_frame.length == 0) {
             matching_frame = $("<div class='frame_context' data-id="+ctxt_id+" />")
             $('#comment_section').append(matching_frame);
@@ -96,6 +99,7 @@ $(document).ready(function() {
           $('#video_box').append("<div class='tag_box' data-id="+data['video_frame_ctxt_id']+"/>");
           video.siblings('.tag_box').last().css({'left': currentTag.css('left'), 'top': currentTag.css('top'), 'width': currentTag.width(), 'height': currentTag.height()});
           currentTag.css({'width':0, 'height':0});
+          console.log('hello');
         }
       );
   })

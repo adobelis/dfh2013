@@ -16,14 +16,15 @@
       }
     </style>
     <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/style.css">
-    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+    
 
 	<script type='text/javascript' src='http://code.jquery.com/jquery-2.0.0b1.js'></script>
 	<script type='text/javascript' src='/static/bootstrap/js/tag.js'></script>
     <script type='text/javascript'>
         var workspace_id = {{workspace_id}};
         var user_id = {{user_id.pk}};
-        var media_item_id = {{media_items.0.id}};
+        var media_item_id = {{media_item.id}};
+        var frame_times = {{frame_times|safe}}
     </script>
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -78,39 +79,20 @@
 		            <div id="play"/>
 		            <div id="time_slider"/>
 		        </div>
-		        <div >
+		        <div id="comment_section">
 		            <textarea id="new_comment"></textarea>
 		            <input type="submit" value="Add Comment" id="add_comment"></input>
-		            <div id="comments">
-		                {% for visual_tag in visual_tags %}
-		                    {% for comment in visual_tag.comments %}
-		                        <p>{{comment.content}}</p>
-		                    {% endfor %}
-		                {% endfor %}
-		            </div>
+                {% for visual_tag in visual_tags %}
+                    {% for comment in visual_tag.comments %}
+                        <p>{{comment.content}}</p>
+                    {% endfor %}
+                {% endfor %}
 		        </div>
 	        </div>
         </div>
 
 
     </div> <!-- /container -->
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../assets/js/jquery.js"></script>
-    <script src="../assets/js/bootstrap-transition.js"></script>
-    <script src="../assets/js/bootstrap-alert.js"></script>
-    <script src="../assets/js/bootstrap-modal.js"></script>
-    <script src="../assets/js/bootstrap-dropdown.js"></script>
-    <script src="../assets/js/bootstrap-scrollspy.js"></script>
-    <script src="../assets/js/bootstrap-tab.js"></script>
-    <script src="../assets/js/bootstrap-tooltip.js"></script>
-    <script src="../assets/js/bootstrap-popover.js"></script>
-    <script src="../assets/js/bootstrap-button.js"></script>
-    <script src="../assets/js/bootstrap-collapse.js"></script>
-    <script src="../assets/js/bootstrap-carousel.js"></script>
-    <script src="../assets/js/bootstrap-typeahead.js"></script>
 
   </body>
 </html>

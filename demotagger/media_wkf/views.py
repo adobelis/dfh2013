@@ -92,11 +92,17 @@ def media_item(request, workspace_index, mi_index):
         return HttpResponse("Not your workspace")
     media_item = mw_models.MediaItem.objects.get(pk=mi_index)
     sample_preso = media_item.sample_presentation
+
+    frame_times = mw_models.VideoFrameContext.objects.filter(media_item=media_item)
+    frame_times = json.dumps([{"id": frame_time.id, "time": frame_time.frame_time} \
+                    for frame_time in frame_times])
+
     return {
         "workspace_id": workspace_index,
         "user_id": user_profile,
         "sample_preso": sample_preso,
         "media_item": media_item,
+        "frame_times": frame_times
     }
 
 
@@ -104,6 +110,7 @@ def media_item(request, workspace_index, mi_index):
 
 @csrf_exempt
 def add_comment(request):
+    print "hello"
     request_data        = json.loads(request.POST['data'])
     workspace_id        = request_data.get('workspace_id', None)
     media_item_id      = request_data.get('media_item_id', None)
@@ -123,7 +130,6 @@ def add_comment(request):
       media_item = mw_models.MediaItem.objects.get(pk=media_item_id)
       frame_context = mw_models.VideoFrameContext(workspace=workspace, media_item=media_item, frame_time=frame_time)
       frame_context.save()
-      video_frame_ctxt_id = frame_context.id
     
     new_note = mw_models.VisualTag(workspace_id=workspace_id, video_frame_context_id=video_frame_ctxt_id, commenter_up_id=commenter_id, top=top, left=left, width=width, height=height, comment_type=comment_type, comment_urgency=comment_urgency, tag_index=0)
     new_note.save()
