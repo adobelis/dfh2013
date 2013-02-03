@@ -19,7 +19,7 @@ $(document).ready(function() {
     if (left < video.width() && top < video.height()-30) {
       tagging = true;
       currentTag.css({'left': left, 'top': top, 'width':0, 'height':0});
-      console.log(video[0].currentTime);
+      //console.log(video[0].currentTime);
     }
   });
   $('body').mousemove(function(e) {
@@ -75,14 +75,14 @@ $(document).ready(function() {
     }
   })
   $('#add_comment').click(function(e) {
-    console.log("hello");
+    //console.log("hello");
     var data = {workspace_id: workspace_id, media_item_id: media_item_id, video_frame_ctxt_id: context, frame_time: video[0].currentTime, commenter_id: user_id,
           left: parseInt(currentTag.css('left')),
           top: parseInt(currentTag.css('top')),
           width: currentTag.width(),
           height: currentTag.height(),
           comment_text: $('#new_comment').val()};
-          console.log(data);
+          //console.log(data);
     $.post('/media_wkf/add_comment/',
         {"data": JSON.stringify(data)},
         function(data) {
@@ -98,10 +98,27 @@ $(document).ready(function() {
           
           //$('.tag_box').last().attr('data-frame', ctxt_id);
           var new_comment = $('#new_comment');
-          var comment = $("<div class='comment' data-frame="+video[0].currentTime+"><div class='text'>"+new_comment.val()+"</div></div>");
+          var comment = $("<div class='comment' data-frame="+video[0].currentTime+"><div class='text'>At "+parseInt(video[0].currentTime)+"s: "+new_comment.val()+"</div></div>");
           tag.append(comment).slideDown();
           comment.click(function(e) {
-            video[0].currentTime = $(this).attr('data-frame');
+            var vTime = video[0].currentTime = $(this).attr('data-frame');
+            context = null;
+            var mindiff = 1;
+            for (var i in frame_times) {
+              var frame = frame_times[i];
+              var diff = Math.abs(frame.time-video[0].currentTime);
+              if (diff<mindiff) {
+                mindiff = diff;
+                context = frame.id;
+              }
+            }
+            $('.tag_box').each(function() {
+              if ($(this).attr('data-frame') == context) {
+                $(this).show();
+              } else {
+                $(this).hide();
+              }
+            })
             video.trigger("timeupdate");
             $(".tag_box[data-id="+$(this).parent().attr('data-id')+"]").show();
           })
@@ -126,7 +143,7 @@ $(document).ready(function() {
           $('#video_box').append(tag_box);
           video.siblings('.tag_box').last().css({'left': currentTag.css('left'), 'top': currentTag.css('top'), 'width': currentTag.width(), 'height': currentTag.height()});
           currentTag.css({'width':0, 'height':0, 'left':-8});
-          console.log('hello');
+          //console.log('hello');
         }
       );
   })
@@ -143,7 +160,7 @@ $(document).ready(function() {
           context = frame.id;
         }
       }
-      console.log(context);
+      //console.log(context);
       $('.tag_box').each(function() {
         if ($(this).attr('data-frame') == context) {
           $(this).show();
@@ -158,7 +175,7 @@ $(document).ready(function() {
   })
 
   $('.comment').mouseenter(function(e) {
-    alert('hello');
+    //alert('hello');
     $(".tag_box[data-id="+$(this).parent().attr('data-id')+"]").addClass('hover');
   })
 })
