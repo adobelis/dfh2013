@@ -110,7 +110,6 @@ def media_item(request, workspace_index, mi_index):
 
 @csrf_exempt
 def add_comment(request):
-    print "hello"
     request_data        = json.loads(request.POST['data'])
     workspace_id        = request_data.get('workspace_id', None)
     media_item_id      = request_data.get('media_item_id', None)
@@ -130,6 +129,7 @@ def add_comment(request):
       media_item = mw_models.MediaItem.objects.get(pk=media_item_id)
       frame_context = mw_models.VideoFrameContext(workspace=workspace, media_item=media_item, frame_time=frame_time)
       frame_context.save()
+      video_frame_ctxt_id = frame_context.id
     
     new_note = mw_models.VisualTag(workspace_id=workspace_id, video_frame_context_id=video_frame_ctxt_id, commenter_up_id=commenter_id, top=top, left=left, width=width, height=height, comment_type=comment_type, comment_urgency=comment_urgency, tag_index=0)
     new_note.save()
