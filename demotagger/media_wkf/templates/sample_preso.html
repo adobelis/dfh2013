@@ -11,6 +11,7 @@
         var workspace_id = {{workspace_id}};
         var user_id = {{user_id.pk}};
         var media_item_id = {{media_items.0.id}};
+        var frame_times = {{frame_times|safe}}
     </script>
   <meta name="boolyrun" content="1359837780044-2951"><script>window["_GOOG_TRANS_EXT_VER"] = "1";</script></head>
   <body>
@@ -39,16 +40,16 @@
   		<div class="row">Presentation: {{ sample_preso }}</div>
         <div class="row">
         <div id="video_box">
-            <video width="640" height="480" id="video">
+            <video width="640" height="480" id="video" controls>
                 <source src="{{ MEDIA_URL }}{{ media_items.0.media_file}}" type="video/mp4"/>
             </video>
             <div id="new_tag"/>
         </div>
         <div id="video_controls">
-            <div id="play"/>
-            <div id="time_slider"/>
+            <div id="play"></div>
+            <div id="time_slider"></div>
         </div>
-        <div>
+        <div id="comment_section">
             <textarea id="new_comment"></textarea>
             <input type="submit" value="Add Comment" id="add_comment"></input>
             <div id="comments">

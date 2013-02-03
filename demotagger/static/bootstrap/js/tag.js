@@ -1,20 +1,21 @@
+
+
 $(document).ready(function() {
   var tagging = false;
   var left = 0;
   var top = 0;
   var width, height;
+  var tag_hash = {tag_frames: {}};
+  var tag_added = false;
+  var context = -1;
   var currentTag = $('#new_tag');
   var video = $('#video');
-
-  var tag_hash = {tag_frames: {}};
-
-  var tag_added = false;
 
   $('body').mousedown(function(e) {
     var offset = video.offset();
     left = e.pageX-offset.left;
     top = e.pageY-offset.top;
-    if (left < video.width() && top < video.height()) {
+    if (left < video.width() && top < video.height()-30) {
       tagging = true;
       currentTag.css({'left': left, 'top': top, 'width':0, 'height':0});
       console.log(video[0].currentTime);
@@ -77,29 +78,46 @@ $(document).ready(function() {
     video[0].currentTime = $(this).attr('data');
   })
   $('#add_comment').click(function(e) {
-    var matching_frame = $(".frame_context[data-frame="+video[0].currentTime+"]").attr('data-id');
-    var data = {workspace_id: workspace_id, media_item_id: media_item_id, video_frame_ctxt_id: matching_frame, frame_time: video[0].currentTime, commenter_id: user_id,
+    var data = {workspace_id: workspace_id, media_item_id: media_item_id, video_frame_ctxt_id: context, frame_time: video[0].currentTime, commenter_id: user_id,
           left: parseInt(currentTag.css('left')),
           top: parseInt(currentTag.css('top')),
           width: currentTag.width(),
           height: currentTag.height()};
-    
-    if (matching_frame == null) {
-      $('#comment_section').append("<div class='frame_context' data-frame="+video[0].currentTime+" data-id=0/>")
-    }
-
-    var frame_context = $(".frame_context[data-frame="+video[0].currentTime+"]")
-
-
-    console.log(data);
     $.post('/media_wkf/add_comment/',
         {"data": JSON.stringify(data)},
         function(data) {
-          console.log(data['video_frame_ctxt_id']);
+          var ctxt_id = data['video_frame_ctxt_id'];
+          var matching_frame = $(".frame_context[data-id="+ctxt_id+"]");
+          if (matching_frame.length == 0) {
+            matching_frame = $("<div class='frame_context' data-id="+ctxt_id+" />")
+            $('#comment_section').append(matching_frame);
+          }
+
           $('#video_box').append("<div class='tag_box' data-id="+data['video_frame_ctxt_id']+"/>");
           video.siblings('.tag_box').last().css({'left': currentTag.css('left'), 'top': currentTag.css('top'), 'width': currentTag.width(), 'height': currentTag.height()});
           currentTag.css({'width':0, 'height':0});
         }
       );
   })
+  video[0].addEventListener("timeupdate", function () {
+      //  Current time  
+      var vTime = video[0].currentTime;
+      context = null;
+      var mindiff = 1;
+      for (var i in frame_times) {
+        var frame = frame_times[i];
+        var diff = Math.abs(frame.time-video[0].currentTime);
+        if (diff<mindiff) {
+          mindiff = diff;
+          context = frame.id;
+        }
+      }
+      $('.tag_box').each(function() {
+        if ($(this).attr('data-id') == context) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      })
+  }, false);
 })
