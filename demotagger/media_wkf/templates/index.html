@@ -19,13 +19,13 @@
             <div id="play"/>
             <div id="time_slider"/>
         </div>
-        <div id="comments">
-            {% for visual_tag in visual_tags %}
-                {% for comment in visual_tag.comments %}
-                    <p>{{comment.content}}</p>
+        <div>
+            <div id="comments">
+                {% for visual_tag in visual_tags %}
+                    {% for comment in visual_tag.comments %}
+                        <p>{{comment.content}}</p>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
+            </div>
         </div>
-  
-  
 </body></html>
