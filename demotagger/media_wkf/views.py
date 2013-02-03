@@ -26,3 +26,20 @@ def index(request):
           }
           ]
       }
+
+def add_comment(request):
+    request_data        = json.loads(request.POST['data'])
+    workspace_id        = request_data.get('workspace_id', None)
+    video_frame_ctxt_id = request_data.get('video_id', None)
+    frame_time          = request_data.get('frame_time', None)
+    commenter_id        = request_data.get('commenter_id', None)
+    top                 = request_data.get('top', None)
+    left                = request_data.get('left', None)
+    height              = request_data.get('height', None)
+    width               = request_data.get('width', None)
+    comment_type        = request_data.get('comment_type', None)
+    comment_urgency     = request_data.get('comment_urgency', None)
+
+    #tag_index           = models.IntegerField()
+    
+    return HttpResponse("Hi.")
