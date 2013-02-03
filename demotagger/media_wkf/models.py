@@ -134,4 +134,7 @@ class VisualTag(models.Model):
     comment_type        = models.IntegerField(default=0)
     comment_urgency     = models.IntegerField(default=0)
     
-
+class Comment(models.Model):
+    visual_tag          = models.ForeignKey(VisualTag)
+    text                = models.TextField(blank=True, null=True)
+    dt_created          = models.DateTimeField(default=datetime.utcnow)

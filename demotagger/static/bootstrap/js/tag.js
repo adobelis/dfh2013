@@ -11,6 +11,7 @@ $(document).ready(function() {
   var currentTag = $('#new_tag');
   var video = $('#video');
 
+  $('.comment-bar').hide();
   $('body').mousedown(function(e) {
     var offset = video.offset();
     left = e.pageX-offset.left;
@@ -73,32 +74,58 @@ $(document).ready(function() {
       }
     }
   })
-  $('.comment').click(function(e) {
-    console.log($(this).attr('data'));
-    video[0].currentTime = $(this).attr('data');
-  })
   $('#add_comment').click(function(e) {
     console.log("hello");
     var data = {workspace_id: workspace_id, media_item_id: media_item_id, video_frame_ctxt_id: context, frame_time: video[0].currentTime, commenter_id: user_id,
           left: parseInt(currentTag.css('left')),
           top: parseInt(currentTag.css('top')),
           width: currentTag.width(),
-          height: currentTag.height()};
+          height: currentTag.height(),
+          comment_text: $('#new_comment').val()};
           console.log(data);
     $.post('/media_wkf/add_comment/',
         {"data": JSON.stringify(data)},
         function(data) {
           var ctxt_id = data['video_frame_ctxt_id'];
           var matching_frame = $(".frame_context[data-id="+ctxt_id+"]");
-          console.log(matching_frame);
           if (matching_frame.length == 0) {
-            matching_frame = $("<div class='frame_context' data-id="+ctxt_id+" />")
+            matching_frame = $("<div class='frame_context' data-id="+ctxt_id+" />");
             $('#comment_section').append(matching_frame);
           }
-
-          $('#video_box').append("<div class='tag_box' data-id="+data['video_frame_ctxt_id']+"/>");
+          var tag_id = data['tag_id'];
+          var tag = $("<div class='visual_tag' data-id="+tag_id+" />");
+          matching_frame.append(tag);
+          
+          //$('.tag_box').last().attr('data-frame', ctxt_id);
+          var new_comment = $('#new_comment');
+          var comment = $("<div class='comment' data-frame="+video[0].currentTime+"><div class='text'>"+new_comment.val()+"</div></div>");
+          tag.append(comment).slideDown();
+          comment.click(function(e) {
+            video[0].currentTime = $(this).attr('data-frame');
+            video.trigger("timeupdate");
+            $(".tag_box[data-id="+$(this).parent().attr('data-id')+"]").show();
+          })
+          comment.mouseenter(function(e) {
+            $(this).addClass('hover');
+            $(".tag_box[data-id="+$(this).parent().attr('data-id')+"]").addClass('hover');
+          })
+          comment.mouseleave(function(e) {
+            $(this).removeClass('hover');
+            $(".tag_box[data-id="+$(this).parent().attr('data-id')+"]").removeClass('hover');
+          })
+          new_comment.val('');
+          var tag_box = $("<div class='tag_box' data-frame="+data['video_frame_ctxt_id']+" data-id="+tag_id+"/>");
+          tag_box.mouseenter(function(e) {
+            $(this).addClass('hover');
+            $(".visual_tag[data-id="+$(this).attr('data-id')+"] .comment").addClass('hover');
+          })
+          tag_box.mouseleave(function(e) {
+            $(this).removeClass('hover');
+            $(".visual_tag[data-id="+$(this).attr('data-id')+"] .comment").removeClass('hover');
+          })
+          $('#video_box').append(tag_box);
           video.siblings('.tag_box').last().css({'left': currentTag.css('left'), 'top': currentTag.css('top'), 'width': currentTag.width(), 'height': currentTag.height()});
-          currentTag.css({'width':0, 'height':0});
+          currentTag.css({'width':0, 'height':0, 'left':-8});
           console.log('hello');
         }
       );
@@ -116,12 +143,22 @@ $(document).ready(function() {
           context = frame.id;
         }
       }
+      console.log(context);
       $('.tag_box').each(function() {
-        if ($(this).attr('data-id') == context) {
+        if ($(this).attr('data-frame') == context) {
           $(this).show();
         } else {
           $(this).hide();
         }
       })
   }, false);
+
+  $('.comment').click(function(e) {
+    video[0].currentTime = $(this).attr('data-frame');
+  })
+
+  $('.comment').mouseenter(function(e) {
+    alert('hello');
+    $(".tag_box[data-id="+$(this).parent().attr('data-id')+"]").addClass('hover');
+  })
 })

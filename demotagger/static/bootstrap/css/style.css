@@ -14,14 +14,32 @@
 
 #video_box .tag_box {
   position: absolute;
-  border:1px solid yellow;
+  border:2px solid yellow;
+}
+
+.tag_box.hover {
+  background: rgba(255,255,255,.3);
 }
 
 #video_box #new_tag {
   position: absolute;
-  border:1px solid red;
+  border:2px solid red;
+}
+
+#add_comment {
+  height:46px;
 }
 
 #comments {
   clear: both;
+}
+
+.comment {
+  background: #eeeeee;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.comment.hover {
+  background: #cccccc;
 }

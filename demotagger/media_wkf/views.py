@@ -93,16 +93,21 @@ def media_item(request, workspace_index, mi_index):
     media_item = mw_models.MediaItem.objects.get(pk=mi_index)
     sample_preso = media_item.sample_presentation
 
-    frame_times = mw_models.VideoFrameContext.objects.filter(media_item=media_item)
+    frames = mw_models.VideoFrameContext.objects.filter(media_item=media_item)
     frame_times = json.dumps([{"id": frame_time.id, "time": frame_time.frame_time} \
-                    for frame_time in frame_times])
+                    for frame_time in frames])
+
+    comment_hash = {}
+    #for frame in frames:
+      #comment_hash[]
 
     return {
         "workspace_id": workspace_index,
         "user_id": user_profile,
         "sample_preso": sample_preso,
         "media_item": media_item,
-        "frame_times": frame_times
+        "frame_times": frame_times,
+        "frames": frames
     }
 
 
@@ -122,6 +127,7 @@ def add_comment(request):
     width               = request_data.get('width', None)
     comment_type        = request_data.get('comment_type', 0)
     comment_urgency     = request_data.get('comment_urgency', 0)
+    comment_text        = request_data.get('comment_text', None)
 
     #tag_index           = models.IntegerField()
     if not video_frame_ctxt_id:
@@ -134,7 +140,9 @@ def add_comment(request):
     new_note = mw_models.VisualTag(workspace_id=workspace_id, video_frame_context_id=video_frame_ctxt_id, commenter_up_id=commenter_id, top=top, left=left, width=width, height=height, comment_type=comment_type, comment_urgency=comment_urgency, tag_index=0)
     new_note.save()
 
+    #new_comment = mw_models.Commment(visual_tag=new_note, text=comment_text)
+
     return HttpResponse(
-      json.dumps({"video_frame_ctxt_id": video_frame_ctxt_id}),
+      json.dumps({"video_frame_ctxt_id": video_frame_ctxt_id, "tag_id": new_note.id}),
       mimetype='application/json'
     );
