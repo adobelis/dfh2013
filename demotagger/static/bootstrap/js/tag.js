@@ -5,6 +5,9 @@ $(document).ready(function() {
   var width, height;
   var currentTag;
   var video = $('#video');
+
+  var tag_hash = {tag_frames: {}};
+
   $('body').mousedown(function(e) {
     var offset = video.offset();
     left = e.pageX-offset.left;
@@ -55,6 +58,12 @@ $(document).ready(function() {
       if (endX == left && endY == top) {
         currentTag.remove();
       }
+      var frame = tag_hash["tag_frames"][""+video[0].currentTime];
+      if (frame == null) {
+        frame = tag_hash["tag_frames"][""+video[0].currentTime] = {visual_tags:[]};
+      }
+      frame["visual_tags"].push({"visual_tag" : []});
+      console.log(JSON.stringify(tag_hash));
     }
   })
   $('.comment').click(function(e) {

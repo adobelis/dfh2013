@@ -6,15 +6,18 @@
     <link rel="stylesheet" href="_static/grids-min.css" type="text/css">
     <link rel="stylesheet" href="_static/djangobook.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <script type='text/javascript' src='http://code.jquery.com/jquery-2.0.0b1.js'></script>
+    <script type='text/javascript' src='/static/bootstrap/js/tag.js'></script>
   <meta name="boolyrun" content="1359837780044-2951"><script>window["_GOOG_TRANS_EXT_VER"] = "1";</script></head>
   <body>
         <div id="video_box">
-            <video width="320" height="240" id="video">
-                <source src="static/movie.mov" type="video/mp4"/>
+            <video width="640" height="480" id="video">
+                <source src="/static/movie2.mov" type="video/mp4"/>
             </video>
-            <div id="">
-
-            </div>
+        </div>
+        <div id="video_controls">
+            <div id="play"/>
+            <div id="time_slider"/>
         </div>
         <div id="comments">
             {% for visual_tag in visual_tags %}
