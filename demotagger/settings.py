@@ -9,6 +9,9 @@ ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 STATIC_ROOT = os.path.join(PROJECT_PATH, 'assets')
 STATICFILES_DIRS = [os.path.join(PROJECT_PATH, 'static')]
+MEDIA_URL = '/media/'
+
+AUTH_PROFILE_MODULE         = "media_wkf.userprofile"
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
