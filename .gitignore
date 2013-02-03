@@ -12,6 +12,16 @@ bin-release/
 
 .DS_Store
 *.pyc
+
 demotagger/localsettings.py
 
 *.mov
+demotagger/media_wkf/__init__.pyc
+
+demotagger/media_wkf/models.pyc
+
+demotagger/settings.pyc
+
+demotagger/utilities/__init__.pyc
+
+demotagger/utilities/models.pyc
