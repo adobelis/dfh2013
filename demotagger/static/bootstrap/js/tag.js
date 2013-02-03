@@ -77,11 +77,20 @@ $(document).ready(function() {
     video[0].currentTime = $(this).attr('data');
   })
   $('#add_comment').click(function(e) {
-    var data = {workspace_id: workspace_id, media_item_id: 0, frame_time: video[0].currentTime, commenter_id: user_id,
+    var matching_frame = $(".frame_context[data-frame="+video[0].currentTime+"]").attr('data-id');
+    var data = {workspace_id: workspace_id, media_item_id: 0, video_frame_ctxt_id: matching_frame, frame_time: video[0].currentTime, commenter_id: user_id,
           left: parseInt(currentTag.css('left')),
           top: parseInt(currentTag.css('top')),
           width: currentTag.width(),
           height: currentTag.height()};
+    
+    if (matching_frame == null) {
+      $('#comment_section').append("<div class='frame_context' data-frame="+video[0].currentTime+" data-id=0/>")
+    }
+
+    var frame_context = $(".frame_context[data-frame="+video[0].currentTime+"]")
+
+
     console.log(data);
     $.post('/media_wkf/add_comment/',
         {"data": JSON.stringify(data)},
