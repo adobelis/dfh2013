@@ -3,7 +3,9 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>DemoTagger</title>
     <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/style.css">
-    <script type='text/javascript' src='http://code.jquery.com/jquery-2.0.0b1.js'></script>
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="/static/bootstrap/css/bootstrap-responsive.css" >    
+	<script type='text/javascript' src='http://code.jquery.com/jquery-2.0.0b1.js'></script>
     <script type='text/javascript' src='/static/bootstrap/js/tag.js'></script>
     <script type='text/javascript'>
         var workspace_id = {{workspace_id}};
@@ -13,8 +15,31 @@
     </script>
   <meta name="boolyrun" content="1359837780044-2951"><script>window["_GOOG_TRANS_EXT_VER"] = "1";</script></head>
   <body>
-  		<div >Presentation: {{ sample_preso }}</div>
-  		hello
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Project name</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      	<h1>Project: </h1>
+  		<div class="row">Presentation: {{ sample_preso }}</div>
+  		{% for media_item in media_items %}
+        <div class="row">
         <div id="video_box">
             <video width="640" height="480" id="video" controls>
                 <source src="{{ MEDIA_URL }}{{ media_items.0.media_file}}" type="video/mp4"/>
@@ -36,4 +61,13 @@
                 {% endfor %}
             </div>
         </div>
+<<<<<<< HEAD
+        {% endfor %}
+        </div>
+</div>
+<footer>
+	<p>© Company 2013</p>
+</footer>
+=======
+>>>>>>> 3f544d53d20f07d874f61fc42eb314bd02b34e1b
 </body></html>

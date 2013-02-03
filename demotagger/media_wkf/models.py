@@ -97,6 +97,8 @@ class MediaItem(models.Model):
     and the designer tags/comments on
     """
     workspace = models.ForeignKey(Workspace)
+    media_item_name = models.CharField(max_length=200, blank=True, null=True)
+    media_item_description = models.TextField(blank=True, null=True)
     sample_presentation = models.ForeignKey(SamplePresentation)
     url                 = models.URLField(_('url'),
                                             verify_exists=False,
@@ -105,6 +107,8 @@ class MediaItem(models.Model):
     media_file  = models.FileField(upload_to='media_items/', 
                                    max_length=250,
                                    null=True, blank=True)
+    def __unicode__(self):
+        return u'%s' % self.media_item_name
 
 class VideoFrameContext(models.Model):
     """
