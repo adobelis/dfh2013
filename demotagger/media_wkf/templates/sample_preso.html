@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>DemoTagger</title>
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/style.css">
+    <script type='text/javascript' src='http://code.jquery.com/jquery-2.0.0b1.js'></script>
+    <script type='text/javascript' src='/static/bootstrap/js/tag.js'></script>
+    <script type='text/javascript'>
+        var workspace_id = {{workspace_id}}
+        var user_id = {{user_id}}
+    </script>
+  <meta name="boolyrun" content="1359837780044-2951"><script>window["_GOOG_TRANS_EXT_VER"] = "1";</script></head>
+  <body>
+  		<div >Presentation: {{ sample_preso }}</div>
+  		{% for media_item in media_items %}
+  		hello
+        <div id="video_box">
+            <video width="640" height="480" id="video">
+                <source src="{{ MEDIA_URL }}{{ media_item.media_file}}" type="video/mp4"/>
+            </video>
+            <div id="new_tag"/>
+        </div>
+        <div id="video_controls">
+            <div id="play"/>
+            <div id="time_slider"/>
+        </div>
+        <div>
+            <textarea id="new_comment"></textarea>
+            <input type="submit" value="Add Comment" id="add_comment"></input>
+            <div id="comments">
+                {% for visual_tag in visual_tags %}
+                    {% for comment in visual_tag.comments %}
+                        <p>{{comment.content}}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+</body></html>
