@@ -33,7 +33,7 @@ def index(request):
 
 @csrf_exempt
 def add_comment(request):
-    request_data        = json.loads(request.POST)
+    request_data        = json.loads(request.POST['data'])
     workspace_id        = request_data.get('workspace_id', None)
     #video_frame_ctxt_id = request_data.get('video_id', None)
     frame_time          = request_data.get('frame_time', None)
@@ -47,6 +47,7 @@ def add_comment(request):
 
     #tag_index           = models.IntegerField()
     
-    return {
-      "frame_id": 0
-    }
+    return HttpResponse(
+      json.dumps({"frame_id": 0}),
+      mimetype='application/json'
+    );

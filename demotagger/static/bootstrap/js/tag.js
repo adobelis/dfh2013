@@ -84,11 +84,11 @@ $(document).ready(function() {
           height: currentTag.height()};
     console.log(data);
     $.post('/media_wkf/add_comment/',
-        JSON.stringify(data),
+        {"data": JSON.stringify(data)},
         function(data) {
-          currentTag.css({'width':0, 'height':0});
           $('#video_box').append('<div class="tag_box"></div>');
           video.siblings('.tag_box').last().css({'left': currentTag.css('left'), 'top': currentTag.css('top'), 'width': currentTag.width(), 'height': currentTag.height()});
+          currentTag.css({'width':0, 'height':0});
         }
       );
   })
