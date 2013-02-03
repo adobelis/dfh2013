@@ -78,7 +78,7 @@ $(document).ready(function() {
   })
   $('#add_comment').click(function(e) {
     var matching_frame = $(".frame_context[data-frame="+video[0].currentTime+"]").attr('data-id');
-    var data = {workspace_id: workspace_id, media_item_id: 0, video_frame_ctxt_id: matching_frame, frame_time: video[0].currentTime, commenter_id: user_id,
+    var data = {workspace_id: workspace_id, media_item_id: media_item_id, video_frame_ctxt_id: matching_frame, frame_time: video[0].currentTime, commenter_id: user_id,
           left: parseInt(currentTag.css('left')),
           top: parseInt(currentTag.css('top')),
           width: currentTag.width(),
@@ -95,7 +95,8 @@ $(document).ready(function() {
     $.post('/media_wkf/add_comment/',
         {"data": JSON.stringify(data)},
         function(data) {
-          $('#video_box').append('<div class="tag_box"></div>');
+          console.log(data['video_frame_ctxt_id']);
+          $('#video_box').append("<div class='tag_box' data-id="+data['video_frame_ctxt_id']+"/>");
           video.siblings('.tag_box').last().css({'left': currentTag.css('left'), 'top': currentTag.css('top'), 'width': currentTag.width(), 'height': currentTag.height()});
           currentTag.css({'width':0, 'height':0});
         }
