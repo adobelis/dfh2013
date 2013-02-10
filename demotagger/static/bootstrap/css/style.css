@@ -38,8 +38,14 @@
   background: #eeeeee;
   padding: 5px;
   margin-bottom: 5px;
+  width: 305px;
 }
 
 .comment.hover {
   background: #cccccc;
+}
+.grouping-bar {
+  background: #f2f2f2;
+  padding: 15px 0;
+  margin: 8px 0;
 }

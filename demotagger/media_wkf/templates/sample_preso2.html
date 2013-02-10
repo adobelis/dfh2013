@@ -65,12 +65,12 @@
       	<h2>Sample presentation: {{ sample_preso }}</h2>
         <p>Version 2. Presented Jan 3, 2013 by <a href="#">De Vasco Fashions (Mexico)</a>.</p>
         {% for media_item in media_items %}
-        <div class="row">
+        <div class="row grouping-bar">
 	        <div class="span2">
-				<img src="#">Thumbnail</img>
+				<img src="/static/{% cycle "abc.jpg" "abf.jpg" "sds.jpg" %}"></img>
 	        </div>
 	        <div class="span8">
-		      	<h4>View: {{ media_item }}</h1>
+		      	<h4><a href="{% url media_item workspace_id media_item.pk %}">View: {{ media_item }}</a></h1>
 		        <p>{{media_item.media_item_description}}</p>
 	        </div>
         </div>

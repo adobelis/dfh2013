@@ -101,12 +101,13 @@ $(document).ready(function() {
           var comment = $("<div class='comment' data-frame="+video[0].currentTime+"><div class='text'>At "+parseInt(video[0].currentTime)+"s: "+new_comment.val()+"</div></div>");
           tag.append(comment).slideDown();
           comment.click(function(e) {
-            var vTime = video[0].currentTime = $(this).attr('data-frame');
+            video[0].currentTime = $(this).attr('data-frame');
+            var vTime = $(this).attr('data-frame');
             context = null;
             var mindiff = 1;
             for (var i in frame_times) {
               var frame = frame_times[i];
-              var diff = Math.abs(frame.time-video[0].currentTime);
+              var diff = Math.abs(frame.time-vTime);
               if (diff<mindiff) {
                 mindiff = diff;
                 context = frame.id;
@@ -154,7 +155,7 @@ $(document).ready(function() {
       var mindiff = 1;
       for (var i in frame_times) {
         var frame = frame_times[i];
-        var diff = Math.abs(frame.time-video[0].currentTime);
+        var diff = Math.abs(frame.time-vTime);
         if (diff<mindiff) {
           mindiff = diff;
           context = frame.id;
